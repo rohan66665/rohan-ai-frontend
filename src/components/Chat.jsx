@@ -7,7 +7,7 @@ export default function Chat() {
 
   const API = import.meta.env.VITE_API_URL;
 
-  // 🔥 CHAT MESSAGE
+  // CHAT
   const sendMessage = async () => {
     if (!message.trim()) return;
 
@@ -37,7 +37,7 @@ export default function Chat() {
     setLoading(false);
   };
 
-  // 🔥 IMAGE UPLOAD (FIXED)
+  // IMAGE
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -55,22 +55,16 @@ export default function Chat() {
 
       const data = await res.json();
 
-      console.log("UPLOAD RESPONSE:", data);
-
-        setChat((prev) => [
-          ...prev,
-          {
-            user: "📷 Image Uploaded",
-            bot: data.text ||
-                 data.message||
-                 data.result||
-                 JSON.stringify(data),
-          },
-        ]);
-      } catch (err) {
-        console.error(err);
-        alert("Up;oad failed");
-      }
+      setChat((prev) => [
+        ...prev,
+        {
+          user: "📷 Image Uploaded",
+          bot: data.text || JSON.stringify(data),
+        },
+      ]);
+    } catch (err) {
+      alert("Upload failed");
+    }
 
     setLoading(false);
   };
@@ -86,7 +80,6 @@ export default function Chat() {
             <div className="bot">{c.bot}</div>
           </div>
         ))}
-
         {loading && <div className="bot">Typing...</div>}
       </div>
 
